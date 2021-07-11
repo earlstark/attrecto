@@ -20,6 +20,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'profile_img_ext',
     ];
 
     /**
@@ -44,4 +45,12 @@ class User extends Authenticatable
     public function todos() {
         return $this->hasMany(Todo::class);
     }
+
+    public function getProfileImageData() {
+        return [
+            "base_path" => public_path(),
+            "url" => "/profileImages/profilePicture_thum_" . $this->getAttribute("id") . "." . $this->getAttribute("profile_img_ext"),
+        ];
+    }
+
 }

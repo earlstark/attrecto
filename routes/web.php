@@ -25,3 +25,7 @@ Route::post('/todos/add', [TodoController::class, 'add']);
 Route::get('/todos/delete/{id}', [TodoController::class, 'delete']);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::post('/home/uploadImage', [App\Http\Controllers\HomeController::class, 'uploadImage']);
+
+Route::get('/profileimg/{id}', [App\Http\Controllers\ProfilePictureManagerController::class, 'index'])->name('profileimg');
+Route::post('/profileimg/uploadImage/{id}', [App\Http\Controllers\ProfilePictureManagerController::class, 'uploadImage']);

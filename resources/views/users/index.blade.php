@@ -72,7 +72,7 @@
 
     <table class="table table-bordered">
         <tr>
-            <th>No</th>
+            <th>Profile picture</th>
             <th>Name</th>
             <th>Email</th>
             <th>Todo</th>
@@ -80,12 +80,32 @@
         </tr>
         @foreach ($data as $key => $user)
             <tr>
-                <td>{{ ++$i }}</td>
+                <td>
+                    <a href="/profileimg/{{ $user->id }}">
+                        @if(!file_exists($user->getProfileImageData()["base_path"] . $user->getProfileImageData()["url"]))
+                            <img src="/profileImages/default.png"/>
+                        @else
+                            <img src="{{ $user->getProfileImageData()["url"] }}"/>
+                        @endif
+                    </a>
+                </td>
                 <td>{{ $user->name }}</td>
                 <td>{{ $user->email }}</td>
                 <td>
+                    <div id="todo_display_div_{{ $user->id }}">
+                        @foreach($user->todos()->get()->toArray() as $todo)
+                                <div class="row">
+                                    <div class="col">
+                                        {{ $todo["name"] }}
+                                    </div>
+                                    <div class="col">
+                                        {{ $todo["date"] }}
+                                    </div>
+                                </div>
+                        @endforeach
+                    </div>
                     <button class="btn btn-primary todo_modal_opener_button" data_id="{{ $user->id }}" data_name="{{ $user->name }}" data_todo_data='{{ $user->todos()->get() }}'>
-                        Todos
+                        Manage
                     </button>
                 </td>
                 <td>
@@ -98,7 +118,7 @@
         @endforeach
     </table>
 
-    {!! $data->render() !!}
+    {!! $data->links('pagination::bootstrap-4') !!}
 
     <script>
         todos.setShowModalEvents();

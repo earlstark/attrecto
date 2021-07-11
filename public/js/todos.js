@@ -60,6 +60,7 @@ const todos = {
     setContainer : function(data) {
         const userId = $("#modal_user_id").val();
         $(".btn[data_id="+userId+"]").attr("data_todo_data", JSON.stringify(data));
+        this.setDisplayContainer(userId, data);
         let html = "";
         for (let i in data) {
             html += '<div class="row" style="margin-bottom: 10px;">';
@@ -75,6 +76,21 @@ const todos = {
             html += '</div>';
         }
         $("#todo_container").html(html);
+    },
+    setDisplayContainer : function (userId, data) {
+        let html = "";
+        for (let i in data) {
+            html += '<div class="row">';
+                html += '<div class="col">';
+                    html += data[i].name;
+                html += '</div>';
+                html += '<div class="col">';
+                    html += data[i].date;
+                html += '</div>';
+            html += '</div>';
+        }
+        $("#todo_display_div_" + userId).html(html);
+
     },
     delete : function (id) {
         const me = this;
