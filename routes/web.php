@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\TodoController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,13 +15,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/users');
 });
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-Auth::routes();
+Route::resource('users', UserController::class);
+Route::post('/todos/add', [TodoController::class, 'add']);
+Route::get('/todos/delete/{id}', [TodoController::class, 'delete']);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
